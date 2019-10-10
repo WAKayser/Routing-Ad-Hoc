@@ -1,7 +1,10 @@
 function connMatrix = conCalculator(nodes, J, distScale, run)
-%CONCALCULATOR Summary of this function goes here
-%   Detailed explanation goes here
-    
+
+    % Uses the log normal probability to model fading and path loss. J can
+    % be used to set the variance / path loss. Dist scale can be used to
+    % further separate the nodes. Run can be used to maek sure the nodes
+    % that do not move, do not change link state. 
+
     state = rng;
     rng(run);
     numNodes = length(nodes);

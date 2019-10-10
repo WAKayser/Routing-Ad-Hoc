@@ -1,3 +1,6 @@
+% Playground for testing out routing in a single scenario. This can be
+% extended to have multiple different scenarios.
+
 clear;
 
 numNodes = 50;

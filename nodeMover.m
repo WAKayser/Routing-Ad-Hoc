@@ -1,4 +1,8 @@
 function nodes = nodeMover(nodes)
+    
+    % Nodes that move move in a straight line, up until they rech a border
+    % in which case they take a turn of 180 degrees and move further. 
+
     numNodes = length(nodes);
     for a = 1:numNodes
         newX = nodes(a).x + nodes(a).speed * cos(nodes(a).direction);

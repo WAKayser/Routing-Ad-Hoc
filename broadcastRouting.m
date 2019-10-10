@@ -1,5 +1,11 @@
 function metric = broadcastRouting(connMatrix, traffic)
     
+    % This broadcasts packages naively over the entire network. The
+    % destination node does not broadcast further. This is basically worst
+    % case scenario for amount of data packets broadcasted. However
+    % complexity is low, uses no routing packets and has maximal success
+    % probability. 
+
     G = graph(connMatrix);
 
     metric.numData = 0;

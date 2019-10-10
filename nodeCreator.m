@@ -1,6 +1,9 @@
 function nodes = nodeCreator(N, probMoving, maxSpeed)
-%NODECREATOR Summary of this function goes here
-%   Detailed explanation goes here
+
+    % Generates n amound of nodes, some of which move at a speed that is
+    % uniformly distributed between 0 and maxSpeed.
+    % Also, a random direction is chosen. 
+
     for i = 1:N
         nodes(i).x = rand;
         nodes(i).y = rand;
