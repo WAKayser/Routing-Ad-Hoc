@@ -1,9 +1,9 @@
-function connMatrix = conCalculator(nodes, J, distScale)
+function connMatrix = conCalculator(nodes, J, distScale, run)
 %CONCALCULATOR Summary of this function goes here
 %   Detailed explanation goes here
     
     state = rng;
-    rng(0);
+    rng(run);
     numNodes = length(nodes);
     
     
