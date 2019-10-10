@@ -3,7 +3,7 @@ function metric = broadcastRouting(connMatrix, traffic)
     G = graph(connMatrix);
 
     metric.numData = 0;
-    
+    metric.numRoute = 0;
     metric.success = 0;
     metric.failure = 0;
     
