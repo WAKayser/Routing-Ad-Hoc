@@ -19,16 +19,17 @@ function metric = broadcastRouting(connMatrix, traffic)
         while (length(firststage) ~= length(secondstage))
             for i = 1:length(firststage)
                 x = firststage(i);
-                if x == traffic(n, 2)
+                if (x == traffic(n, 2)) && (~ismember(x, secondstage))
                     secondstage = [secondstage x];
                 end
                 if ~ismember(x, secondstage)
                     secondstage = [secondstage x];
                     metric.numData = metric.numData + 1;
                     recipients = neighbors(G, x);
-                    for y = recipients
-                        if ~ismember(y, firststage) 
-                            firststage = [firststage; y];
+                    for y = 1:length(recipients)
+                        recipient = recipients(y);
+                        if ~ismember(recipient, firststage) 
+                            firststage = [firststage recipient]
                         end
                     end
                 end 
