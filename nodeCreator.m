@@ -5,8 +5,7 @@ function nodes = nodeCreator(N, probMoving, maxSpeed)
     % Also, a random direction is chosen. 
 
     for i = 1:N
-        nodes(i).x = rand;
-        nodes(i).y = rand;
+        nodes(i).location = rand + rand*1j;
         nodes(i).speed = (rand < probMoving) * rand * maxSpeed;
         nodes(i).direction = 2 * pi * rand;
     end

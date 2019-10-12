@@ -12,7 +12,7 @@ function connMatrix = conCalculator(nodes, J, distScale)
     
     for a = 2:numNodes
         for b = 1:(a-1)
-            dist = distScale * sqrt((nodes(a).x - nodes(b).x)^2 + (nodes(a).x - nodes(b).x)^2);
+            dist = distScale * abs(nodes(a).location - nodes(b).location);
             
             probability = 1/2 * (1 - erf(v * log(dist) / J));
             connection = rand < probability;

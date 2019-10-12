@@ -10,15 +10,14 @@ function metric = idealRouting(connMatrix, traffic)
     metric.numRoute = 0;
     
     G = graph(connMatrix);
-    
+    d = G.distances;
     for n = 1:length(traffic)
-        path = G.shortestpath(traffic(n, 1), traffic(n, 2));
-        if isempty(path)
-            metric.failure = metric.failure + 1;
-        else
+        path = d(traffic(n, 1), traffic(n, 2));
+        if path
             metric.success = metric.success + 1;
-            metric.numData = metric.numData + length(path);
+            metric.numData = metric.numData + path;
         end
-    end   
+    end
+    metric.failure = length(traffic) - metric.success;
 end
 
