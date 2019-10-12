@@ -4,7 +4,7 @@ function traffic = trafficGen(numNodes, lambda)
     % between random nodes. 
     
     set = randperm(numNodes);
-    numTraffic = poissrnd(lambda);
+    numTraffic = min(25, max(2, poissrnd(lambda)));
     traffic = reshape(set(1:numTraffic*2), numTraffic, 2);
 end
 
