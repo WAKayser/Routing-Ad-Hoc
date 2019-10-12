@@ -29,7 +29,7 @@ function metric = broadcastRouting(connMatrix, traffic)
                     for y = 1:length(recipients)
                         recipient = recipients(y);
                         if ~ismember(recipient, firststage) 
-                            firststage = [firststage recipient]
+                            firststage = [firststage recipient];
                         end
                     end
                 end 
