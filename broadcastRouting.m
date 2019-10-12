@@ -9,16 +9,13 @@ function metric = broadcastRouting(connMatrix, traffic)
     metric.numData = 0;
     metric.numRoute = 0;
     metric.success = 0;
-    metric.failure = 0;
     
     for n = 1:length(traffic)
         firststage = traffic(n, 1);
         secondstage = traffic(n, 2);
-        
         difference = setdiff(firststage, secondstage);
         
         while difference
-            
             secondstage = [secondstage difference];
             metric.numData = metric.numData + length(difference);
             
@@ -26,11 +23,8 @@ function metric = broadcastRouting(connMatrix, traffic)
             firststage = unique([neighbors' firststage]);
             difference = setdiff(firststage, secondstage);
         end
-        if ismember(traffic(n, 2), secondstage)
-            metric.success = metric.success + 1;
-        else
-            metric.failure = metric.failure + 1;
-        end
+        metric.success = metric.success + ismember(traffic(n, 2), secondstage);
     end
+    metric.failure = length(traffic) - metric.success;
 end
 
