@@ -6,15 +6,17 @@ clear;
 numNodes = 50;
 
 nodes = nodeCreator(numNodes, 0.5, 0.01);
-connectivity = conCalculator(nodes, 2, 5);
+connMatrix = conCalculator(nodes, 2, 5);
+[metric(1).batman, batmanTable] = batmanUpdater(ones(50) * 127, connMatrix, nodes, 1, 0);
 
 for t = 1:100
     traffic = trafficGen(numNodes, 10);
     
-    results(t).oneHop = oneHopRouting(connectivity, traffic);
-    results(t).broadcast = broadcastRouting(connectivity, traffic);
-    results(t).ideal = idealRouting(connectivity, traffic);
+    results(t).oneHop = oneHopRouting(connMatrix, traffic);
+    results(t).broadcast = broadcastRouting(connMatrix, traffic);
+    results(t).ideal = idealRouting(connMatrix, traffic);
     
     nodes = nodeMover(nodes);
-    connectivity = conUpdater(connectivity, nodes, 2, 5);
+    connMatrix = conUpdater(connMatrix, nodes, 2, 5);
+    [metric(t+1).batman, batmanTable] = batmanUpdater(batmanTable, connMatrix, nodes, 0.1, 0.1);
 end
