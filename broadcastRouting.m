@@ -30,7 +30,7 @@ function metric = broadcastRouting(connMatrix, traffic)
             end
             
         end
-        metric.success = metric.success + ismember(traffic(n, 2), secondstage);
+        metric.success = metric.success + ismember(traffic(n, 2), firststage);
     end
     metric.failure = length(traffic) - metric.success;
 end

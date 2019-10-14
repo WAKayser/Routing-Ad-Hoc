@@ -13,16 +13,17 @@ function metric = idealRouting(connMatrix, traffic)
         state = zeros(1, 50);
         state(traffic(n, 1)) = 1;
         steps = 0;
-        while ~state(traffic(n, 2)) && steps < 12
+        while ~state(traffic(n, 2)) && steps < 16
             state = state * connMatrix;
             steps = steps + 1;
         end
         
-        if steps < 12
+        if steps < 16
             metric.success = metric.success + 1;
             metric.numData = metric.numData + steps;
+        else
+            metric.failure = metric.failure + 1;
         end
     end
-    metric.failure = length(traffic) - metric.success;
 end
 
