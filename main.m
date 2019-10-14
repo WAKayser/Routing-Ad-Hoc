@@ -7,7 +7,7 @@ numNodes = 50;
 
 nodes = nodeCreator(numNodes, 0.5, 0.01);
 connMatrix = conCalculator(nodes, 2, 5);
-[metric(1).batman, batmanTable] = batmanUpdater(ones(50) * 127, connMatrix, nodes, 1, 0);
+[results(1).batmanU, batmanTable] = batmanUpdater(ones(50) * 127, connMatrix, nodes, 1, 0);
 
 for t = 1:100
     traffic = trafficGen(numNodes, 10);
@@ -19,5 +19,8 @@ for t = 1:100
     
     nodes = nodeMover(nodes);
     connMatrix = conUpdater(connMatrix, nodes, 2, 5);
-    [metric(t+1).batmanU, batmanTable] = batmanUpdater(batmanTable, connMatrix, nodes, 0.1, 0.1);
+    [results(t+1).batmanU, batmanTable] = batmanUpdater(batmanTable, connMatrix, nodes, 0.2, 1);
 end
+
+disp("oneHop, Ideal, Flooding, batman")
+final = metricSquasher(results)
