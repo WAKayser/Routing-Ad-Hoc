@@ -5,7 +5,7 @@ clear;
 
 numNodes = 5;
 
-start = zeros(50, 50, 3);
+start = zeros(numNodes, numNodes, 3);
 start(:, :, 2) = inf;
 
   
