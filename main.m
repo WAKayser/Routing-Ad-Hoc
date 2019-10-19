@@ -3,7 +3,7 @@
 
 clear;
 
-numNodes = 50;
+numNodes = 5;
 
 start = zeros(50, 50, 3);
 start(:, :, 2) = inf;
@@ -11,11 +11,10 @@ start(:, :, 2) = inf;
   
 nodes = nodeCreator(numNodes, 0.5, 0.01);
 connMatrix = conCalculator(nodes, 2, 5);
-[results(1).batmanU, batmanTable] = batmanUpdater(ones(50) * 127, connMatrix, nodes, 1, 0);
+[results(1).batmanU, batmanTable] = batmanUpdater(ones(numNodes) * 127, connMatrix, nodes, 1, 0);
 [results(1).dsdvU, dsdvTable] = dsdvUpdater(start, connMatrix);
 
 for t = 1:100
-    t = t
     traffic = trafficGen(numNodes, 10);
     
     results(t).oneHop = oneHopRouting(connMatrix, traffic);

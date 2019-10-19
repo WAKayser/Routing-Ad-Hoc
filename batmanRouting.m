@@ -6,7 +6,7 @@ function metric = batmanRouting(batmanTable, connMatrix, traffic)
     for i = 1:length(traffic)
         start = traffic(i, 1);
         destination = traffic(i, 2);
-        visited = 127 * ones(50, 1);
+        visited = 127 * ones(length(connMatrix), 1);
         hopcount = batmanTable(destination, start);
         visited(start) = hopcount;
        
