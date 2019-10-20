@@ -23,4 +23,3 @@ function connMatrix = conUpdater(connMatrix, nodes, J, distScale)
         end
     end
 end
-

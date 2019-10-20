@@ -26,4 +26,3 @@ function metric = idealRouting(connMatrix, traffic)
         end
     end
 end
-

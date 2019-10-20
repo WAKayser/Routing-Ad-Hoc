@@ -27,4 +27,3 @@ function metric = batmanRouting(batmanTable, connMatrix, traffic)
     end
     metric.failure = length(traffic) - metric.success;
 end
-

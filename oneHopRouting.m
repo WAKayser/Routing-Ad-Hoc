@@ -12,4 +12,3 @@ function metric = oneHopRouting(connMatrix, traffic)
     metric.numData = size(traffic, 2);
     metric.numRoute = 0;
 end
-

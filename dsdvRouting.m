@@ -24,4 +24,3 @@ function metric = dsdvRouting(dsdvTable, connMatrix, traffic)
     end
     metric.success = length(traffic) - metric.failure;
 end
-
