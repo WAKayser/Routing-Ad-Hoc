@@ -9,11 +9,11 @@ function metric = idealRouting(connMatrix, traffic)
     metric.numData = 0;
     metric.numRoute = 0;
   
-    for n = 1:length(traffic)
+    for n = 1:size(traffic, 2)
         state = zeros(1, length(connMatrix));
-        state(traffic(n, 1)) = 1;
+        state(traffic(1, n)) = 1;
         steps = 0;
-        while ~state(traffic(n, 2)) && steps < 16
+        while ~state(traffic(2, n)) && steps < 16
             state = state * connMatrix;
             steps = steps + 1;
         end

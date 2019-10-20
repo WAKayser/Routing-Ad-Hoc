@@ -5,6 +5,6 @@ function traffic = trafficGen(numNodes, lambda)
     
     set = randperm(numNodes);
     numTraffic = min(floor(numNodes/2), max(2, poissrnd(lambda)));
-    traffic = reshape(set(1:numTraffic*2), numTraffic, 2);
+    traffic = reshape(set(1:numTraffic*2), numTraffic, 2)';
 end
 

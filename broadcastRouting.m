@@ -10,9 +10,9 @@ function metric = broadcastRouting(connMatrix, traffic)
     metric.numRoute = 0;
     metric.success = 0;
     
-    for n = 1:length(traffic)
-        firststage = traffic(n, 1);
-        secondstage = traffic(n, 2);
+    for n = 1:size(traffic, 2)
+        firststage = traffic(1, n);
+        secondstage = traffic(2, n);
         difference = firststage;
         
         while difference
@@ -30,8 +30,7 @@ function metric = broadcastRouting(connMatrix, traffic)
             end
             
         end
-        metric.success = metric.success + ismember(traffic(n, 2), firststage);
+        metric.success = metric.success + ismember(traffic(2, n), firststage);
     end
     metric.failure = length(traffic) - metric.success;
 end
-

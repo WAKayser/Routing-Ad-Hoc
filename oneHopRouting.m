@@ -4,12 +4,12 @@ function metric = oneHopRouting(connMatrix, traffic)
     % Will fail often, but uses the least amount of packets. 
 
     metric.success = 0;
-    for a = 1:length(traffic)
-        metric.success = metric.success + connMatrix(traffic(a, 1), traffic(a, 2));
+    for a = 1:size(traffic, 2)
+        metric.success = metric.success + connMatrix(traffic(1,a), traffic(2, a));
     end
-    metric.failure = length(traffic) - metric.success;
+    metric.failure = size(traffic, 2) - metric.success;
     
-    metric.numData = length(traffic);
+    metric.numData = size(traffic, 2);
     metric.numRoute = 0;
 end
 

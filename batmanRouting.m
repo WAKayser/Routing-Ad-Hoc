@@ -3,9 +3,9 @@ function metric = batmanRouting(batmanTable, connMatrix, traffic)
     metric.numData = 0;
     metric.success = 0;
     
-    for i = 1:length(traffic)
-        start = traffic(i, 1);
-        destination = traffic(i, 2);
+    for i = 1:size(traffic, 2)
+        start = traffic(1, i);
+        destination = traffic(2, i);
         visited = 127 * ones(length(connMatrix), 1);
         hopcount = batmanTable(destination, start);
         visited(start) = hopcount;
