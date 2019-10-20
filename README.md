@@ -2,8 +2,8 @@
 Matlab implementation of Routing Exercise
 
 Todos:
-* Advanced routing algorithm implementation
-* Visualization of data. 
+* Maybe a proactive system or something with zones. 
+* Bar graph with error plots. 
 
 Routing.m files contain different algorithms for routing. these can be used for comparing results.
 De volgende dingen moeten gemeten worden:
