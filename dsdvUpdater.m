@@ -7,7 +7,16 @@ function [metric, routing] = dsdvUpdater(routing, connMatrix)
         routing(n, n, 1) = n;
         routing(n, n, 2) = 0;
         neighbors = find(connMatrix(:, n));
-        oldNeighbors = setdiff(routing(n, :, 1), [neighbors; 0]);
+
+        knownNeighbors = routing(n, :, 1);
+        log = ~builtin('_ismemberhelper', knownNeighbors, sort([neighbors; 0]));
+        oldNeighbors = sort(knownNeighbors(log));
+        if ~isempty(oldNeighbors)
+            oldNeighbors = oldNeighbors([true diff(oldNeighbors)~=0]);
+        else
+            oldNeighbors = [];
+        end
+
         for x = 1:length(oldNeighbors)
             oldNeighbor = oldNeighbors(x);
             routing(n, oldNeighbor, 1) = 0;
