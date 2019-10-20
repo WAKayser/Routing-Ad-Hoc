@@ -5,8 +5,17 @@ function metric = dsdvRouting(dsdvTable, connMatrix, traffic)
     
     for i = 1:length(traffic)
        pathLength = dsdvTable(traffic(i, 1), traffic(i, 2), 2);
+       next = traffic(i, 1);
        if pathLength < inf
-           metric.numData = metric.numData + pathLength;
+           for n = 1:pathLength
+               previous = next;
+               next = dsdvTable(previous, traffic(i, 2), 1);               
+               metric.numData = metric.numData + 1;
+               if (next == 0) || (connMatrix(previous, next) == 0)
+                   metric.failure = metric.failure + 1;
+                   break
+               end
+           end
        else
            metric.failure = metric.failure + 1;
        end
