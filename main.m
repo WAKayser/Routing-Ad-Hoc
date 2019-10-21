@@ -7,13 +7,12 @@ numNodes = 50;
 
 start = zeros(numNodes, numNodes, 3);
 start(:, :, 2) = inf;
-
   
 nodes = nodeCreator(numNodes, 0.5, 0.01);
 connMatrix = conCalculator(nodes, 2, 6);
 [results(1).batmanU, batmanTable] = batmanUpdater(ones(numNodes) * 127, connMatrix, nodes, 1, 0);
 [results(1).dsdvU, dsdvTable] = dsdvUpdater(start, connMatrix);
-
+[results(1).HZRU, HZRTable] = hybridZoneUpdater(connMatrix);
 
 for t = 1:100
     traffic = trafficGen(numNodes, 10);
@@ -24,12 +23,14 @@ for t = 1:100
     results(t).ideal = idealRouting(connMatrix, traffic);
     results(t).batmanR = batmanRouting(batmanTable, connMatrix, traffic);
     results(t).dsdvR = dsdvRouting(dsdvTable, connMatrix, traffic);
+    results(t).HZRR = HZRRouting(HZRTable, traffic);
     
     nodes = nodeMover(nodes);
     connMatrix = conUpdater(connMatrix, nodes, 2, 5);
     [results(t+1).batmanU, batmanTable] = batmanUpdater(batmanTable, connMatrix, nodes, 1, 0);
     [results(t+1).dsdvU, dsdvTable] = dsdvUpdater(dsdvTable, connMatrix);
+    [results(t+1).HZRU, HZRTable] = hybridZoneUpdater(connMatrix);
 end
 
-disp("oneHop, Ideal, Flooding, batman, DSDV")
+disp("oneHop, Ideal, Flooding, batman, DSDV, HZR")
 final = metricSquasher(results)
