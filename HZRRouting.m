@@ -10,7 +10,7 @@ function metric = HZRRouting(HZRTable, traffic)
         shortestPath = inf;
         
         if HZRTable(start, destination, 2) < 2
-            metric.numData = metric.numData + 2;
+            metric.numData = metric.numData + HZRTable(start, destination, 2);
             metric.success = metric.success + 1;
         else
             visited = find(HZRTable(start, :, 2) < 3);
