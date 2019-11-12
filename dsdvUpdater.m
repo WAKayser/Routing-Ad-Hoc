@@ -26,38 +26,39 @@ function [metric, routing] = dsdvUpdater(routing, connMatrix)
         routing(oldNeighbors, n ,1) = 0;
         routing(oldNeighbors, n ,2) = inf;
         routing(oldNeighbors, n, 3) = floor(routing(oldNeighbors, n, 3)/2)*2 + 1;
-        metric.numRoute = metric.numRoute + 2*length(oldNeighbors);
+        metric.numRoute = metric.numRoute + 1;
     end
     
     while(busy)
         busy = 0;
         for n = 1:length(connMatrix)
-            metric.numRoute = metric.numRoute + 1;
+            update = 0;
             for entry = 1:length(connMatrix)
                 step = routing(n, entry, 1);
-                if step && mod(routing(step, entry, 3), 2)
+                if step && mod(routing(step, entry, 3), 2) && (routing(step, entry, 3) > routing(n, entry, 3))
                     routing(n, entry, 1) = 0;
                     routing(n, entry, 2) = inf;
-                    routing(n, entry, 3) = routing(step, entry, 3) + 2;
+                    routing(n, entry, 3) = routing(step, entry, 3);
                     busy = 1; 
+                    update = 1;
                 end
             end
+            metric.numRoute = metric.numRoute + update;
         end
     end
-    
-    metric.numRoute = metric.numRoute + 1;
     
     while(metric.numRoute ~= oldNumData)
         oldNumData = metric.numRoute;
         for n = 1:length(connMatrix)
             neighbors = find(connMatrix(:, n));
             for x = 1:length(neighbors)
+                update = 0;
                 neighbor = neighbors(x);
                 if routing(n, neighbor, 2) > 1
                     routing(n, neighbor, 1) = neighbor;
                     routing(n, neighbor, 2) = 1;
                     routing(n, neighbor, 3) = 2 * floor(routing(n, neighbor, 3)/ 2) + 2;
-                    metric.numRoute = metric.numRoute + 1;
+                    update = 1;
                 end
                 for entry = 1:length(connMatrix)
                     if (routing(neighbor, entry, 3) + 1) >= routing(n, entry, 3)
@@ -65,14 +66,14 @@ function [metric, routing] = dsdvUpdater(routing, connMatrix)
                         distance = routing(neighbor, entry, 2) + routing(n, neighbor, 2);
                         if distance < routing(n, entry, 2)
                             routing(n, entry, 1) = neighbor;
-                            metric.numRoute = metric.numRoute + 1;
+                            update = 1;
                             routing(n, entry, 2) = distance;
                             routing(n, entry, 3) = routing(n, entry, 3);
                         end
                     end
                 end
+                metric.numRoute = metric.numRoute + update;
             end          
         end
     end
 end
-

@@ -12,14 +12,13 @@ function [metric, routing] = hybridZoneUpdater(connMatrix)
         metric.numRoute = metric.numRoute + 1;
         neighbors = find(connMatrix(:, n));
         % All neighbors respond
-        metric.numRoute = metric.numRoute + length(neighbors);
         routing(n, neighbors, 1) = neighbors;
         routing(n, neighbors, 2) = 1; 
     end
     
-    %Second step zone
+    %Second step zone, node broadcast all their neighbores
     for n = 1:numNodes
-        metric.numRoute = metric.numRoute;
+        metric.numRoute = metric.numRoute + 1;
         neighbors = find(routing(n, :, 2)==1);
         numN = length(neighbors);
         for x = 1:numN
