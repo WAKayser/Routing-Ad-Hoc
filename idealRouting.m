@@ -1,4 +1,4 @@
-function metric = idealRouting(connMatrix, traffic)
+function [metric, path] = idealRouting(connMatrix, traffic)
 
     % Assuming the connection matrix is known this always uses the
     % shortestpath and the least amount of sending time. This is not in the
@@ -24,5 +24,9 @@ function metric = idealRouting(connMatrix, traffic)
         else
             metric.failure = metric.failure + 1;
         end
+    end
+    if nargout == 2
+        G = graph(connMatrix);
+        path = shortestpath(G, traffic(1), traffic(2));
     end
 end

@@ -1,4 +1,4 @@
-function metric = HZRRouting(HZRTable, traffic)
+function [metric, path] = HZRRouting(HZRTable, traffic)
 
     metric.numData = 0;
     metric.success = 0;
@@ -9,9 +9,14 @@ function metric = HZRRouting(HZRTable, traffic)
         destination = traffic(2, i);
         shortestPath = inf;
         
-        if HZRTable(start, destination, 2) < 2
-            metric.numData = metric.numData + HZRTable(start, destination, 2);
+        if HZRTable(start, destination, 2) == 1
+            metric.numData = metric.numData + 1;
             metric.success = metric.success + 1;
+            path = [start destination];
+        elseif HZRTable(start, destination, 2) == 2
+            metric.numData = metric.numData + 2;
+            metric.success = metric.success + 1;
+            path = [start HZRTable(start, destination, 1) destination];
         else
             visited = find(HZRTable(start, :, 2) < 3);
             edgesA = find(HZRTable(start, :, 2) == 2);
@@ -21,6 +26,11 @@ function metric = HZRRouting(HZRTable, traffic)
                 if (HZRTable(aHop, destination, 2) < 3)
                     if (2 + HZRTable(aHop, destination, 2)) < shortestPath
                         shortestPath = 2 + HZRTable(aHop, destination, 2);
+                        if HZRTable(aHop, destination, 2) == 1
+                            path = [start HZRTable(start, aHop, 1) aHop destination];
+                        else
+                            path = [start HZRTable(start, aHop, 1) aHop HZRTable(aHop, destination, 1) destination];
+                        end
                     end
                 else
                     edgesB = find(HZRTable(aHop, :, 2) == 2);
@@ -32,6 +42,13 @@ function metric = HZRRouting(HZRTable, traffic)
                         if (HZRTable(bHop, destination, 2) < 3)
                             if (4 + HZRTable(bHop, destination, 2)) < shortestPath
                                 shortestPath = 4 + HZRTable(bHop, destination, 2);
+                                
+                                if HZRTable(bHop, destination, 2) == 1
+                                    path = [start HZRTable(start, aHop, 1) aHop HZRTable(aHop, bHop, 1) bHop destination];
+                                else
+                                    path = [start HZRTable(start, aHop, 1) aHop HZRTable(aHop, bHop, 1) bHop HZRTable(bHop, destination, 1) destination];
+                                end
+                                
                             end
                         else
                             edgesC = find(HZRTable(bHop, :, 2) == 2);
@@ -43,6 +60,13 @@ function metric = HZRRouting(HZRTable, traffic)
                                 if (HZRTable(cHop, destination, 2) < 3)
                                     if (6 + HZRTable(cHop, destination, 2)) < shortestPath
                                         shortestPath = 6 + HZRTable(cHop, destination, 2);
+                                        
+                                        if HZRTable(cHop, destination, 2) == 1
+                                            path = [start HZRTable(start, aHop, 1) aHop HZRTable(aHop, bHop, 1) bHop HZRTable(bHop, cHop, 1) cHop destination];
+                                        else
+                                            path = [start HZRTable(start, aHop, 1) aHop HZRTable(aHop, bHop, 1) bHop HZRTable(bHop, cHop, 1) cHop HZRTable(cHop, destination, 1) destination];
+                                        end
+                                        
                                     end
                                 else
                                     edgesD = find(HZRTable(cHop, :, 2) == 2);
@@ -54,6 +78,13 @@ function metric = HZRRouting(HZRTable, traffic)
                                         if (HZRTable(dHop, destination, 2) < 3)
                                             if (8 + HZRTable(dHop, destination, 2)) < shortestPath
                                                 shortestPath = 8 + HZRTable(dHop, destination, 2);
+                                                
+                                                if HZRTable(cHop, destination, 2) == 1
+                                                    path = [start HZRTable(start, aHop, 1) aHop HZRTable(aHop, bHop, 1) bHop HZRTable(bHop, cHop, 1) cHop HZRTable(cHop, dHop, 1) dHop destination];
+                                                else
+                                                    path = [start HZRTable(start, aHop, 1) aHop HZRTable(aHop, bHop, 1) bHop HZRTable(bHop, cHop, 1) cHop HZRTable(cHop, dHop, 1) dHop HZRTable(dHop, destination, 1) destination];
+                                                end
+                                                
                                             end
                                         end
                                     end

@@ -1,4 +1,4 @@
-function metric = dsdvRouting(dsdvTable, connMatrix, traffic)
+function [metric, path] = dsdvRouting(dsdvTable, connMatrix, traffic)
 
     metric.numData = 0;
     metric.failure = 0;
@@ -6,10 +6,12 @@ function metric = dsdvRouting(dsdvTable, connMatrix, traffic)
     for i = 1:size(traffic, 2)
        pathLength = dsdvTable(traffic(1, i), traffic(2, i), 2);
        next = traffic(1, i);
+       path = next;
        if pathLength < inf
            for n = 1:pathLength
                previous = next;
-               next = dsdvTable(previous, traffic(2, i), 1);               
+               next = dsdvTable(previous, traffic(2, i), 1);
+               path = [path next];
                metric.numData = metric.numData + 1;
                if (next == 0) || (connMatrix(previous, next) == 0)
                    metric.failure = metric.failure + 1;
@@ -22,5 +24,5 @@ function metric = dsdvRouting(dsdvTable, connMatrix, traffic)
            metric.failure = metric.failure + 1;
        end
     end
-    metric.success = length(traffic) - metric.failure;
+    metric.success = size(traffic, 2) - metric.failure;
 end
