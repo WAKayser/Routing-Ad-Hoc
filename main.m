@@ -9,7 +9,7 @@ start = zeros(numNodes, numNodes, 3);
 start(:, :, 2) = inf;
   
 nodes = nodeCreator(numNodes, 0.5, 0.01);
-connMatrix = conCalculator(nodes, 2, 6);
+connMatrix = conCalculator(nodes, 2, 5);
 batteriesA = rand(50, 1);
 batteriesB = batteriesA;
 

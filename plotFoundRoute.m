@@ -1,4 +1,7 @@
-function plotRoute(nodes, connMatrix, path)
+function plotFoundRoute(nodes, connMatrix, path)
+    G = graph(connMatrix);
+    dist = distances(G);
+
    for x = 1:(length(path))
        for y = 1:length(path)
            if connMatrix(path(x), path(y))

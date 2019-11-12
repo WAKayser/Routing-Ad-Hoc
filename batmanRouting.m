@@ -25,6 +25,6 @@ function [metric, path] = batmanRouting(batmanTable, connMatrix, traffic)
             metric.success = metric.success + 1;
         end
     end
-    metric.failure = length(traffic) - metric.success;
+    metric.failure = size(traffic, 2) - metric.success;
     path = find(visited < 127);
 end
