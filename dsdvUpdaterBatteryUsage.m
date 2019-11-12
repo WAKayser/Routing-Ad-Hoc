@@ -1,9 +1,13 @@
-function [metric, routing] = dsdvUpdater(routing, connMatrix)
+function [metric, routing, batteries] = dsdvUpdaterBatteryUsage(routing, connMatrix, batteries, routeUse)
 
     metric.numRoute = 0;
     oldNumData = 1;
     numNodes = length(connMatrix);
     busy = 1;
+    
+    empty = find(batteries < 0);
+    connMatrix(empty, :) = 0;
+    connMatrix(:, empty) = 0;
     
     for n = 1:numNodes
         routing(n, n, 1) = n;
@@ -27,6 +31,9 @@ function [metric, routing] = dsdvUpdater(routing, connMatrix)
         routing(oldNeighbors, n ,2) = inf;
         routing(oldNeighbors, n, 3) = floor(routing(oldNeighbors, n, 3)/2)*2 + 1;
         metric.numRoute = metric.numRoute + 1;
+        if batteries(n) > 0
+            batteries(n) = batteries(n) - routeUse;
+        end
     end
     
     while(busy)
@@ -44,6 +51,11 @@ function [metric, routing] = dsdvUpdater(routing, connMatrix)
                 end
             end
             metric.numRoute = metric.numRoute + update;
+            if update
+                if batteries(n) > 0
+                    batteries(n) = batteries(n) - routeUse;
+                end
+            end
         end
     end
     
@@ -73,6 +85,11 @@ function [metric, routing] = dsdvUpdater(routing, connMatrix)
                     end
                 end
                 metric.numRoute = metric.numRoute + update;
+                if update
+                    if batteries(x) > 0
+                        batteries(x) = batteries(x) - routeUse;
+                    end
+                end
             end          
         end
     end
