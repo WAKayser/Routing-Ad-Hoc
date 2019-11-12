@@ -26,7 +26,7 @@ function [metric, routing] = dsdvUpdater(routing, connMatrix)
         routing(oldNeighbors, n ,1) = 0;
         routing(oldNeighbors, n ,2) = inf;
         routing(oldNeighbors, n, 3) = floor(routing(oldNeighbors, n, 3)/2)*2 + 1;
-%         metric.numRoute = metric.numRoute + 2*length(oldNeighbors);
+        metric.numRoute = metric.numRoute + 2*length(oldNeighbors);
     end
     
     while(busy)
