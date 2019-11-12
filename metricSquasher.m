@@ -3,7 +3,7 @@ function [metric] = metricSquasher(results)
     % oneHop, ideal, flooding, batman
     % success, failure, numData, numRoute
     
-    metric(4, 7) = 0;
+    metric(4, 8) = 0;
     
     for i = 1:length(results)-1
         metric(1, 1) = metric(1, 1) + results(i).oneHop.success;
@@ -41,6 +41,11 @@ function [metric] = metricSquasher(results)
         metric(2, 7) = metric(2, 7) + results(i).dsdvRA.failure;
         metric(3, 7) = metric(3, 7) + results(i).dsdvRA.numData;
         metric(4, 7) = metric(4, 7) + results(i).dsdvUA.numRoute;
+       
+        metric(1, 8) = metric(1, 8) + results(i).dsdvRB.success;
+        metric(2, 8) = metric(2, 8) + results(i).dsdvRB.failure;
+        metric(3, 8) = metric(3, 8) + results(i).dsdvRB.numData;
+        metric(4, 8) = metric(4, 8) + results(i).dsdvUB.numRoute;
         
     end
 end

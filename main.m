@@ -17,10 +17,11 @@ batteriesB = batteriesA;
 [results(1).dsdvU, dsdvTable] = dsdvUpdater(start, connMatrix);
 [results(1).HZRU, HZRTable] = hybridZoneUpdater(connMatrix);
 [results(1).dsdvUA, dsdvTableA, batteriesA] = dsdvUpdaterBatteryUsage(start, connMatrix, batteriesA, 0.0001);
+[results(1).dsdvUB, dsdvTableB, batteriesB] = dsdvUpdaterBatteryRouting(start, connMatrix, batteriesB, 0.0001);
+
 
 for t = 1:100
     traffic = trafficGen(numNodes, 10);
-%     plotNodes(nodes, connMatrix);
     
     results(t).oneHop = oneHopRouting(connMatrix, traffic);
     results(t).broadcast = broadcastRouting(connMatrix, traffic);
@@ -29,6 +30,7 @@ for t = 1:100
     results(t).dsdvR = dsdvRouting(dsdvTable, connMatrix, traffic);
     results(t).HZRR = HZRRouting(HZRTable, traffic);
     [results(t).dsdvRA, batteriesA] = dsdvRoutingBatteryUsage(dsdvTableA, connMatrix, traffic, batteriesA, 0.001);
+    [results(t).dsdvRB, batteriesB] = dsdvRoutingBatteryUsage(dsdvTableB, connMatrix, traffic, batteriesB, 0.001);
     
     nodes = nodeMover(nodes);
     connMatrix = conUpdater(connMatrix, nodes, 2, 5);
@@ -36,7 +38,8 @@ for t = 1:100
     [results(t+1).dsdvU, dsdvTable] = dsdvUpdater(dsdvTable, connMatrix);
     [results(t+1).HZRU, HZRTable] = hybridZoneUpdater(connMatrix);
     [results(t+1).dsdvUA, dsdvTableA, batteriesA] = dsdvUpdaterBatteryUsage(dsdvTableA, connMatrix, batteriesA, 0.0001);
+    [results(t+1).dsdvUB, dsdvTableB, batteriesB] = dsdvUpdaterBatteryRouting(dsdvTableB, connMatrix, batteriesB, 0.0001);
 end
 
-disp("oneHop, Ideal, Flooding, batman, DSDV, HZR, DSDV with battery use")
+disp("oneHop, Ideal, Flooding, batman, DSDV, HZR, DSDV with battery, DSDV battery aware")
 final = metricSquasher(results)
